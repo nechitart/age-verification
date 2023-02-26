@@ -1,0 +1,68 @@
+<?php
+/**
+ * @var $block \Nechitart\AgeVerification\Block\Adminhtml\Customer\Edit\Tab\View
+ */
+?>
+
+<div class="fieldset-wrapper customer-information">
+    <div class="fieldset-wrapper-title" tabindex="-1">
+        <strong class="title">
+            <span>Age Verification</span>
+        </strong>
+    </div>
+
+    <fieldset class="admin__fieldset">
+        <div class="admin__field">
+            <div class="admin__field-label">
+                <label for="is_verified">
+                    <span>Is Verified</span>
+                </label>
+            </div>
+            <div class="admin__field-control" data-index="is_verified">
+                <div class="admin__actions-switch" data-role="switcher">
+                    <input
+                        type="checkbox"
+                        class="admin__actions-switch-checkbox"
+                        id="is_verified"
+                        data-form-part="customer_form"
+                        name="customer[is_verified]"
+                        value="1"
+                        <?= $block->getIsVerified() ?"checked=\"checked\"" : "" ?>
+                    >
+                    <label for="is_verified" class="admin__actions-switch-label">
+                        <span
+                            class="admin__actions-switch-text"
+                            data-text-on="Yes"
+                            data-text-off="No"
+                        ></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin__field">
+            <div class="admin__field-label">
+                <label for="verification_block">
+                    <span>ID Block</span>
+                </label>
+            </div>
+            <div class="admin__field-control" data-index="verification_block">
+                <?php $blocks = $block->getVerificationBlocks() ?>
+                <?php foreach ($blocks as $key => $value): ?>
+                    <?php $blockName = 'customer[verification_block-' . $key . ']' ?>
+                    <input
+                        id="verification_block"
+                        data-form-part="customer_form"
+                        type="text"
+                        name="<?= $blockName ?>"
+                        value="<?= $value ?>"
+                        style="width: 18%;"
+                    >
+                    <?php if ($key + 1 != count($blocks)): ?>
+                        -
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </fieldset>
+</div>

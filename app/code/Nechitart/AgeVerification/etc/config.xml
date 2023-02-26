@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <nechitart_ageverification>
+            <settings>
+                <enable>1</enable>
+                <not_verified_login>1</not_verified_login>
+                <unique_id>0</unique_id>
+                <verification_age>18</verification_age>
+            </settings>
+            <form>
+                <show_places>0</show_places>
+            </form>
+        </nechitart_ageverification>
+    </default>
+</config>

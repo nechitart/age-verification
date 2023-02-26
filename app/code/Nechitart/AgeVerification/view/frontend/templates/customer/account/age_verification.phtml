@@ -1,0 +1,46 @@
+<?php /** @var \Nechitart\AgeVerification\Block\Form\Edit $block */ ?>
+
+<form class="form form-edit-account"
+      action="<?= $block->escapeUrl($block->getUrl('ageverification/customer/editPost')) ?>"
+      method="post" id="form-validate"
+      enctype="multipart/form-data"
+      data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+      autocomplete="off">
+
+    <fieldset class="fieldset info" style="float: left">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Age Verification')) ?></span></legend><br>
+        <div class="field required" data-container="change-email">
+            <label class="label" for="verification_block"><span><?= $block->escapeHtml(__('ID Block')) ?></span></label>
+            <div class="control">
+                <?php $blocks = $block->getVerificationBlocks() ?>
+                <?php foreach ($blocks as $key => $value): ?>
+                    <?php $blockName = 'customer[verification_block-' . $key . ']' ?>
+                    <input
+                        id="verification_block"
+                        data-form-part="customer_form"
+                        type="text"
+                        name="<?= $blockName ?>"
+                        value="<?= $value ?>"
+                        style="width: 16%;"
+                    >
+                    <?php if ($key + 1 != count($blocks)): ?>
+                        -
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="actions-toolbar">
+        <div class="primary" style="margin-top: 150px">
+            <button type="submit" class="action save primary" title="<?= $block->escapeHtmlAttr(__('Save')) ?>">
+                <span><?= $block->escapeHtml(__('Save')) ?></span>
+            </button>
+        </div>
+        <div class="secondary">
+            <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>">
+                <span><?= $block->escapeHtml(__('Go back')) ?></span>
+            </a>
+        </div>
+    </div>
+</form>

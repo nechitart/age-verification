@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd"
+>
+    <virtualType name="Nechitart\AgeVerification\DataObject\VerificationBlock" type="Magento\Framework\DataObject">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="name" xsi:type="string">verification_block</item>
+                <item name="options" xsi:type="array">
+                    <item name="type" xsi:type="string">varchar</item>
+                    <item name="label" xsi:type="string">ID Block</item>
+                    <item name="input" xsi:type="string">text</item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="admin_only" xsi:type="boolean">true</item>
+                    <item name="position" xsi:type="number">999</item>
+                    <item name="system" xsi:type="number">0</item>
+                </item>
+                <item name="data" xsi:type="array">
+                    <item name="key" xsi:type="string">used_in_forms</item>
+                    <item name="value" xsi:type="array">
+                        <item name="0" xsi:type="string">adminhtml_customer</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Nechitart\AgeVerification\DataObject\IsVerified" type="Magento\Framework\DataObject">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="name" xsi:type="string">is_verified</item>
+                <item name="options" xsi:type="array">
+                    <item name="type" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string">Is Verified</item>
+                    <item name="input" xsi:type="string">boolean</item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="admin_only" xsi:type="boolean">true</item>
+                    <item name="position" xsi:type="number">999</item>
+                    <item name="system" xsi:type="number">0</item>
+                </item>
+                <item name="data" xsi:type="array">
+                    <item name="key" xsi:type="string">used_in_forms</item>
+                    <item name="value" xsi:type="array">
+                        <item name="0" xsi:type="string">adminhtml_customer</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Nechitart\AgeVerification\DataObject\Attributes" type="Magento\Framework\DataObject">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="is_verified" xsi:type="object">Nechitart\AgeVerification\DataObject\IsVerified</item>
+                <item name="verification_block" xsi:type="object">Nechitart\AgeVerification\DataObject\VerificationBlock</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Nechitart\AgeVerification\Setup\InstallData">
+        <arguments>
+            <argument name="attributesData" xsi:type="object">
+                Nechitart\AgeVerification\DataObject\Attributes
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Customer\Controller\Adminhtml\Index\Save">
+        <plugin name="Nechitart_AgeVerification::save_verification_block" type="Nechitart\AgeVerification\Plugin\CustomerAttributeUpdater" sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Customer\Model\ResourceModel\AddressRepository">
+        <plugin name="Nechitart_AgeVerification::validate_address_verification_block" type="Nechitart\AgeVerification\Plugin\AddressRepositoryUpdater" sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Sales\Model\OrderRepository">
+        <plugin name="Nechitart_AgeVerification::validate_order_verification_block" type="Nechitart\AgeVerification\Plugin\OrderRepositoryUpdater" sortOrder="10"/>
+    </type>
+
+    <type name="Nechitart\AgeVerification\Plugin\BaseRepositoryUpdater">
+        <arguments>
+            <argument name="countriesToValidate" xsi:type="array">
+                <item name="0" xsi:type="string">RU</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Nechitart\AgeVerification\Model\Config\Source\WhereOption">
+        <arguments>
+            <argument name="options" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="value" xsi:type="number">0</item>
+                    <item name="label" xsi:type="string">Both Places</item>
+                </item>
+                <item name="1" xsi:type="array">
+                    <item name="value" xsi:type="number">1</item>
+                    <item name="label" xsi:type="string">Checkout Process(Billing)</item>
+                </item>
+                <item name="2" xsi:type="array">
+                    <item name="value" xsi:type="number">2</item>
+                    <item name="label" xsi:type="string">Registration Page</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Nechitart\AgeVerification\Model\VerificationBlock\Validation">
+        <arguments>
+            <argument name="validationRules" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="chars_qty" xsi:type="number">10</item>
+                    <item name="is_total" xsi:type="boolean">false</item>
+                    <item name="check_dob" xsi:type="boolean">false</item>
+                </item>
+                <item name="1" xsi:type="array">
+                    <item name="chars_qty" xsi:type="number">7</item>
+                    <item name="is_total" xsi:type="boolean">false</item>
+                    <item name="check_dob" xsi:type="boolean">true</item>
+                </item>
+                <item name="2" xsi:type="array">
+                    <item name="chars_qty" xsi:type="number">7</item>
+                    <item name="is_total" xsi:type="boolean">false</item>
+                    <item name="check_dob" xsi:type="boolean">false</item>
+                </item>
+                <item name="3" xsi:type="array">
+                    <item name="chars_qty" xsi:type="number">15</item>
+                    <item name="is_total" xsi:type="boolean">false</item>
+                    <item name="check_dob" xsi:type="boolean">false</item>
+                </item>
+                <item name="4" xsi:type="array">
+                    <item name="chars_qty" xsi:type="number">1</item>
+                    <item name="is_total" xsi:type="boolean">true</item>
+                    <item name="check_dob" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference
+        for="Nechitart\AgeVerification\Api\ValidationInterface"
+        type="Nechitart\AgeVerification\Model\Api\Validation"
+    />
+
+    <preference
+        for="Nechitart\AgeVerification\Api\Data\ValidationResponseInterface"
+        type="Nechitart\AgeVerification\Model\ValidationResponse"
+    />
+</config>

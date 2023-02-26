@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="nechitart_ageverification" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Age Verification</label>
+            <tab>nechitart</tab>
+            <resource>Nechitart_AgeVerification::ageverification_config</resource>
+            <group id="settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Settings</label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Age Verification</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="not_verified_login" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Let customer log in if not verified</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="verification_age" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <validate>validate-digits validate-not-negative-number</validate>
+                    <label>Verification Age</label>
+                </field>
+            </group>
+            <group id="form" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Age Verification Form</label>
+                <field id="show_places" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Where to show age verification form</label>
+                    <source_model>Nechitart\AgeVerification\Model\Config\Source\WhereOption</source_model>
+                </field>
+                <field id="register_block" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>AV Register Block</label>
+                    <source_model>Magento\Cms\Model\ResourceModel\Block\Collection</source_model>
+                </field>
+                <field id="checkout_block" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>AV Checkout Block</label>
+                    <source_model>Magento\Cms\Model\ResourceModel\Block\Collection</source_model>
+                </field>
+            </group>
+            <group id="notifications" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Notification Email</label>
+                <field id="emails" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Emails</label>
+                    <comment>a@nechitart.com;b@nechitart.com</comment>
+                </field>
+                <field id="admin_notification" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Email template for notification to admin</label>
+                    <source_model>Magento\Email\Model\ResourceModel\Template\Collection</source_model>
+                </field>
+                <field id="customer_notification" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Email template for verification to customer</label>
+                    <source_model>Magento\Email\Model\ResourceModel\Template\Collection</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
